@@ -1,0 +1,5 @@
+com\xhwh\wechat\config\WechatAccountConfig.class
+com\xhwh\wechat\utils\SecurityUtil.class
+com\xhwh\wechat\WechatApplication.class
+com\xhwh\wechat\config\WeChatMpConfig.class
+com\xhwh\wechat\controller\WechatController.class
