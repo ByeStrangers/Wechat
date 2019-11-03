@@ -1,7 +1,0 @@
-server:
-  port: 8090
-
-wechat:
-  mpAppId: wxc2e3a0a6e8cb64cc
-  mpAppSecret: 401e7b286840dcf31aa900b0d43af9aa
-  myToken: wechatAccess
