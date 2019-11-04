@@ -1,7 +1,6 @@
 package com.xhwh.wechat.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
@@ -37,10 +36,21 @@ public class WechatController {
     @ResponseBody
     public void wechatAccess(HttpServletRequest request, HttpServletResponse response) throws IOException {
         WxMpXmlMessage wxMpXmlMessage = WxMpXmlMessage.fromXml(request.getInputStream());
+        response.setContentType("text/html;charset=UTF-8"); //解决中文乱码问题
         log.info(wxMpXmlMessage.toString());
-        WxMpMessageRouter wxMpMessageRouter = new WxMpMessageRouter(wxMpService);
-        wxMpMessageRouter.rule().async(false).end();
-        WxMpXmlOutMessage wxMpXmlOutMessage = wxMpMessageRouter.route(wxMpXmlMessage);
+        WxMpXmlOutMessage wxMpXmlOutMessage;
+        if("image".equals(wxMpXmlMessage.getMsgType())){
+            wxMpXmlOutMessage = WxMpXmlOutMessage.IMAGE().toUser(wxMpXmlMessage.getFromUser())
+                    .fromUser(wxMpXmlMessage.getToUser())
+                    .mediaId(wxMpXmlMessage.getMediaId())
+                    .build();
+        }else {
+            String content = "text".equals(wxMpXmlMessage.getMsgType()) ? wxMpXmlMessage.getContent() : "很抱歉，暂不支持此类型的消息";
+            wxMpXmlOutMessage = WxMpXmlOutMessage.TEXT().toUser(wxMpXmlMessage.getFromUser())
+                    .fromUser(wxMpXmlMessage.getToUser())
+                    .content(content)
+                    .build();
+        }
         if(wxMpXmlOutMessage != null){
             log.info(wxMpXmlOutMessage.toXml());
             response.getWriter().print(wxMpXmlOutMessage.toXml());
