@@ -13,4 +13,5 @@ public class WechatAccountConfig {
     private String mpAppId; //微信公众号APPID
     private String mpAppSecret; //微信公众号密钥
     private String myToken; //自己在公众号定义的接入Token
+    private String domain; //当前域名
 }
