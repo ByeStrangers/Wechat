@@ -56,6 +56,7 @@ public class WechatController {
                 wxMpXmlOutMessage = WxMpXmlOutMessage.TEXT().toUser(wxMpXmlMessage.getFromUser())
                         .fromUser(wxMpXmlMessage.getToUser())
                         .content("[坏笑]欢迎关注，功能展示回复序号：\n" +
+                                 "0、展示功能列表\n" +
                                  "1、模板消息")
                         .build();
             }else if("unsubscribe".equals(event)){
@@ -71,7 +72,14 @@ public class WechatController {
             }
         } else {
             String content = "text".equals(wxMpXmlMessage.getMsgType()) ? wxMpXmlMessage.getContent() : "很抱歉，暂不支持此类型的消息";
-            if("1".equals(content)){
+            if("0".equals(content)){
+                wxMpXmlOutMessage = WxMpXmlOutMessage.TEXT().toUser(wxMpXmlMessage.getFromUser())
+                        .fromUser(wxMpXmlMessage.getToUser())
+                        .content("[坏笑]欢迎关注，功能展示回复序号：\n" +
+                                "0、展示功能列表\n" +
+                                "1、模板消息")
+                        .build();
+            } else if("1".equals(content)){
                 WxMpTemplateMsgService wxMpTemplateMsgService = wxMpService.getTemplateMsgService();
                 WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage.builder()
                         .templateId("g_J505E9qFi3K-8FUooZAhPRBvAavmoUcAF5qYEEoiI")
