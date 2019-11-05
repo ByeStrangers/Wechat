@@ -73,6 +73,11 @@ public class WechatController {
                         .fromUser(wxMpXmlMessage.getToUser())
                         .content("[奸笑]欢迎再次关注！")
                         .build();
+            } else if("TEMPLATESENDJOBFINISH".equals(event)){
+                wxMpXmlOutMessage = WxMpXmlOutMessage.TEXT().toUser(wxMpXmlMessage.getFromUser())
+                        .fromUser(wxMpXmlMessage.getToUser())
+                        .content("[捂脸]模板事件推送！")
+                        .build();
             }else {
                 wxMpXmlOutMessage = WxMpXmlOutMessage.TEXT().toUser(wxMpXmlMessage.getFromUser())
                         .fromUser(wxMpXmlMessage.getToUser())
@@ -92,12 +97,16 @@ public class WechatController {
             } else if("1".equals(content)){
                 WxMpTemplateMsgService wxMpTemplateMsgService = wxMpService.getTemplateMsgService();
                 WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage.builder()
-                        .templateId("g_J505E9qFi3K-8FUooZAhPRBvAavmoUcAF5qYEEoiI")
+                        .templateId(wechatAccountConfig.getTemplateId1())
                         .toUser(wxMpXmlMessage.getFromUser())
-                        .url("https://www.jianshu.com/p/760a3558a8fb")
+                        .url(wechatAccountConfig.getNoteUrl())
                         .build();
                 wxMpTemplateMessage.addWxMpTemplateData(new WxMpTemplateData("title", "小白仔细听，大神请指正","#D890FA"));
-                wxMpTemplateMessage.addWxMpTemplateData(new WxMpTemplateData("keyword1", "1、微信接入 2、回复消息 3、模板消息 4、网页授权","#768BF7"));
+                wxMpTemplateMessage.addWxMpTemplateData(new WxMpTemplateData("keyword1", "\n" +
+                                                                                     "                 1、微信接入\n" +
+                                                                                     "                 2、回复消息\n" +
+                                                                                     "                 3、模板消息\n" +
+                                                                                     "                 4、网页授权","#768BF7"));
                 wxMpTemplateMessage.addWxMpTemplateData(new WxMpTemplateData("keyword2", "11","#FA866F"));
                 wxMpTemplateMessage.addWxMpTemplateData(new WxMpTemplateData("keyword3", DateUtils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"),"#81EAD8"));
                 wxMpTemplateMessage.addWxMpTemplateData(new WxMpTemplateData("remark", "\n本次培训仅仅是引领未开发过微信公众号的小哥哥有个大概的了解，讲的不好的地方请大家谅解，本次培训文档参考详情，谢谢大家！","#F5C495"));
@@ -124,7 +133,7 @@ public class WechatController {
         String url = wechatAccountConfig.getDomain() + "/getUserInfo";
         WxMpTemplateMsgService wxMpTemplateMsgService = wxMpService.getTemplateMsgService();
         WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage.builder()
-                .templateId("GS6lpYI1FGo-bkU28UedqoQRjpA2YQ7xgYDquG8liKA")
+                .templateId(wechatAccountConfig.getTemplateId2())
                 .toUser(openId)
                 .url(wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, ""))
                 .build();
@@ -145,7 +154,7 @@ public class WechatController {
                     log.info(wxMpUser.toString());
                     WxMpTemplateMsgService wxMpTemplateMsgService = wxMpService.getTemplateMsgService();
                     WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage.builder()
-                            .templateId("FRwwmx72gT8lyywz7w3mWiWX_inHbjcdVZdbH3n3T-w")
+                            .templateId(wechatAccountConfig.getTemplateId3())
                             .toUser(wxMpUser.getOpenId())
                             .url(wxMpUser.getHeadImgUrl())
                             .build();

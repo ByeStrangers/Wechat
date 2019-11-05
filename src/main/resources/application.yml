@@ -5,6 +5,10 @@ wechat:
   mpAppSecret: 401e7b286840dcf31aa900b0d43af9aa
   myToken: wechatAccess
   domain:  http://frank.nat200.top
+  noteUrl: https://www.jianshu.com/p/760a3558a8fb #培训笔记链接
+  templateId1: g_J505E9qFi3K-8FUooZAhPRBvAavmoUcAF5qYEEoiI #培训介绍模板
+  templateId2: GS6lpYI1FGo-bkU28UedqoQRjpA2YQ7xgYDquG8liKA #网页授权模板
+  templateId3: FRwwmx72gT8lyywz7w3mWiWX_inHbjcdVZdbH3n3T-w #用户信息模板
 
 
 debug: true
