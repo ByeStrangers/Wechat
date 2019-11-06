@@ -132,10 +132,12 @@ public class WechatController {
     private void buildAuthUrl(String openId) throws WxErrorException {
         String url = wechatAccountConfig.getDomain() + "/getUserInfo";
         WxMpTemplateMsgService wxMpTemplateMsgService = wxMpService.getTemplateMsgService();
+        String authUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, "");
+        log.info("authUrl = {}", authUrl);
         WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage.builder()
                 .templateId(wechatAccountConfig.getTemplateId2())
                 .toUser(openId)
-                .url(wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, ""))
+                .url(authUrl)
                 .build();
         wxMpTemplateMessage.addWxMpTemplateData(new WxMpTemplateData("title", "请点击详情进行网页授权","#D890FA"));
         wxMpTemplateMsgService.sendTemplateMsg(wxMpTemplateMessage);
